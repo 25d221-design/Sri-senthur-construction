@@ -1,22 +1,20 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("#contact-form");
+  const form = document.querySelector("#contactForm");
 
-  if (!form) return;
+  if (!form) {
+    console.error("Contact form not found.");
+    return;
+  }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const name =
-      form.querySelector('[name="name"]')?.value.trim() || "";
-    const phone =
-      form.querySelector('[name="phone"]')?.value.trim() || "";
-    const service =
-      form.querySelector('[name="service"]')?.value || "";
-    const location =
-      form.querySelector('[name="location"]')?.value.trim() || "";
-    const details =
-      form.querySelector('[name="details"]')?.value.trim() || "";
+    const name = form.querySelector('[name="name"]').value.trim();
+    const phone = form.querySelector('[name="phone"]').value.trim();
+    const service = form.querySelector('[name="projectType"]').value;
+    const location = form.querySelector('[name="location"]').value.trim();
+    const details = form.querySelector('[name="message"]').value.trim();
 
     const message =
       "New Project Enquiry - Sri Senthur Construction\n\n" +
@@ -26,36 +24,27 @@ document.addEventListener("DOMContentLoaded", function () {
       "Location: " + location + "\n" +
       "Project Details: " + details;
 
-    const recipients = [
-      {
-        name: "Your Father",
-        number: "919786584384"
-      },
-      {
-        name: "You",
-        number: "917339331353"
-      }
-    ];
-
     const choice = prompt(
-      "Send your enquiry to:\n" +
-      "1 - Sri Senthur Construction (Founder)\n" +
-      "2 - CEO\n\nEnter 1 or 2:"
+      "Choose WhatsApp recipient:\n" +
+      "1 - Father (Founder)\n" +
+      "2 - Vishnu (CEO)\n\nEnter 1 or 2:"
     );
 
-    const recipient = recipients[Number(choice) - 1];
+    let number;
 
-    if (!recipient) {
-      alert("Invalid choice. Please submit the form again.");
+    if (choice === "1") {
+      number = "919786584384";
+    } else if (choice === "2") {
+      number = "917339331353";
+    } else {
+      alert("Please enter 1 or 2. Submit the form again.");
       return;
     }
 
     const whatsappURL =
-      "https://wa.me/" +
-      recipient.number +
-      "?text=" +
-      encodeURIComponent(message);
+      "https://wa.me/" + number +
+      "?text=" + encodeURIComponent(message);
 
-    window.open(whatsappURL, "_blank");
+    window.location.href = whatsappURL;
   });
 });
